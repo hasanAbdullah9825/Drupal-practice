@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => 'b11852ac12bb25c49365aef13ffc94bc55069451',
         'name' => 'drupal/recommended-project',
         'dev' => true,
     ),
@@ -26,6 +26,28 @@
             'install_path' => __DIR__ . '/../chi-teck/drupal-code-generator',
             'aliases' => array(),
             'reference' => 'a49f29b0fe6b6c87fa7dc8979589ce8794c4d655',
+            'dev_requirement' => false,
+        ),
+        'commerceguys/addressing' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../commerceguys/addressing',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => 'c81ded457fa0cc7d2c9f5b05294909b20da1b2dc',
+            'dev_requirement' => false,
+        ),
+        'commerceguys/intl' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../commerceguys/intl',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => 'cab3b55dbf8c1753fe54457404082c777a8c154f',
             'dev_requirement' => false,
         ),
         'composer/installers' => array(
@@ -145,6 +167,15 @@
             'reference' => '5b668aef16090008790395c02c893b1ba13f7e08',
             'dev_requirement' => false,
         ),
+        'doctrine/collections' => array(
+            'pretty_version' => '1.7.x-dev',
+            'version' => '1.7.9999999.9999999-dev',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../doctrine/collections',
+            'aliases' => array(),
+            'reference' => 'c7ad5f94dd8e922957cda1a6348d11a5ca919f44',
+            'dev_requirement' => false,
+        ),
         'doctrine/lexer' => array(
             'pretty_version' => '1.2.1',
             'version' => '1.2.1.0',
@@ -168,6 +199,17 @@
             'replaced' => array(
                 0 => '9.3.9',
             ),
+        ),
+        'drupal/address' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/address',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => '82604ddbef12aaa347308bf08a9e5c6d5af5222b',
+            'dev_requirement' => false,
         ),
         'drupal/aggregator' => array(
             'dev_requirement' => false,
@@ -273,6 +315,15 @@
             'replaced' => array(
                 0 => '9.3.9',
             ),
+        ),
+        'drupal/commerce' => array(
+            'pretty_version' => '2.30.0',
+            'version' => '2.30.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/commerce',
+            'aliases' => array(),
+            'reference' => '8.x-2.30',
+            'dev_requirement' => false,
         ),
         'drupal/config' => array(
             'dev_requirement' => false,
@@ -526,11 +577,33 @@
                 0 => '9.3.9',
             ),
         ),
+        'drupal/entity' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/entity',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => 'efc5ae471b40427f19fca3cfe1524f7557d0cabc',
+            'dev_requirement' => false,
+        ),
         'drupal/entity_reference' => array(
             'dev_requirement' => false,
             'replaced' => array(
                 0 => '9.3.9',
             ),
+        ),
+        'drupal/entity_reference_revisions' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/entity_reference_revisions',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => '7df3c9cefa49aeb8d783dd91b4260f78b067c85b',
+            'dev_requirement' => false,
         ),
         'drupal/field' => array(
             'dev_requirement' => false,
@@ -597,6 +670,17 @@
             'replaced' => array(
                 0 => '9.3.9',
             ),
+        ),
+        'drupal/inline_entity_form' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/inline_entity_form',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => '34626ace9739015270ef81063e5d743656e519b7',
+            'dev_requirement' => false,
         ),
         'drupal/inline_form_errors' => array(
             'dev_requirement' => false,
@@ -730,6 +814,17 @@
                 0 => '9.3.9',
             ),
         ),
+        'drupal/profile' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/profile',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => 'c82f25f41818a45333876e61eaae96f92a268fc7',
+            'dev_requirement' => false,
+        ),
         'drupal/quickedit' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -743,12 +838,12 @@
             ),
         ),
         'drupal/recommended-project' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => 'b11852ac12bb25c49365aef13ffc94bc55069451',
             'dev_requirement' => false,
         ),
         'drupal/responsive_image' => array(
@@ -832,6 +927,17 @@
                 0 => '9.3.9',
             ),
         ),
+        'drupal/state_machine' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/state_machine',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => 'c0b5a853b13f19f676542d07222d1cf2c20cc010',
+            'dev_requirement' => false,
+        ),
         'drupal/statistics' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -867,6 +973,17 @@
             'replaced' => array(
                 0 => '9.3.9',
             ),
+        ),
+        'drupal/token' => array(
+            'pretty_version' => 'dev-1.x',
+            'version' => 'dev-1.x',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/token',
+            'aliases' => array(
+                0 => '1.x-dev',
+            ),
+            'reference' => '15851380ed51d57397b7195f5129cf4ae2eab1ae',
+            'dev_requirement' => false,
         ),
         'drupal/toolbar' => array(
             'dev_requirement' => false,
@@ -909,6 +1026,15 @@
             'replaced' => array(
                 0 => '9.3.9',
             ),
+        ),
+        'drupal/webform' => array(
+            'pretty_version' => '6.1.0',
+            'version' => '6.1.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/webform',
+            'aliases' => array(),
+            'reference' => '6.1.0',
+            'dev_requirement' => false,
         ),
         'drupal/workflows' => array(
             'dev_requirement' => false,

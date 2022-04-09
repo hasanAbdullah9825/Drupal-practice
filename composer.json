@@ -17,12 +17,14 @@
     "require": {
         "composer/installers": "^1.9",
         "drupal/blazy": "2.9",
+        "drupal/commerce": "2.30",
         "drupal/core-composer-scaffold": "^9.3",
         "drupal/core-project-message": "^9.3",
         "drupal/core-recommended": "^9.3",
         "drupal/slick": "2.6",
         "drupal/slick_extras": "^1.0@RC",
         "drupal/slick_views": "2.6",
+        "drupal/webform": "6.1",
         "drush/drush": "^11.0"
     },
     "conflict": {
