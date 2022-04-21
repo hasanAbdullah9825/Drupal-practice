@@ -72,7 +72,6 @@ class CartManager implements CartManagerInterface {
     $cart->setAdjustments([]);
 
     $this->eventDispatcher->dispatch(new CartEmptyEvent($cart, $order_items), CartEvents::CART_EMPTY);
-    $this->resetCheckoutFlow($cart);
     $this->resetCheckoutStep($cart);
     if ($save_cart) {
       $cart->save();
@@ -127,7 +126,7 @@ class CartManager implements CartManagerInterface {
     }
     $event = new CartOrderItemAddEvent($cart, $quantity, $saved_order_item);
     $this->eventDispatcher->dispatch($event, CartEvents::CART_ORDER_ITEM_ADD);
-    $this->resetCheckoutFlow($cart);
+
     $this->resetCheckoutStep($cart);
     if ($save_cart) {
       $cart->save();
@@ -145,7 +144,6 @@ class CartManager implements CartManagerInterface {
     $order_item->save();
     $event = new CartOrderItemUpdateEvent($cart, $order_item, $original_order_item);
     $this->eventDispatcher->dispatch($event, CartEvents::CART_ORDER_ITEM_UPDATE);
-    $this->resetCheckoutFlow($cart);
     $this->resetCheckoutStep($cart);
     if ($save_cart) {
       $cart->save();
@@ -167,22 +165,9 @@ class CartManager implements CartManagerInterface {
       return;
     }
 
-    $this->resetCheckoutFlow($cart);
     $this->resetCheckoutStep($cart);
     if ($save_cart) {
       $cart->save();
-    }
-  }
-
-  /**
-   * Resets the checkout flow.
-   *
-   * @param \Drupal\commerce_order\Entity\OrderInterface $cart
-   *   The cart order.
-   */
-  protected function resetCheckoutFlow(OrderInterface $cart) {
-    if ($cart->hasField('checkout_flow')) {
-      $cart->set('checkout_flow', '');
     }
   }
 

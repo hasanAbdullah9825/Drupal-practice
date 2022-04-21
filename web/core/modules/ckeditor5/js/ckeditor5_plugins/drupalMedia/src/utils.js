@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+// cSpell:words documentselection
 import { isWidget } from 'ckeditor5/src/widget';
 
 /**
@@ -32,6 +33,26 @@ export function isDrupalMediaWidget(viewElement) {
 }
 
 /**
+ * Gets `drupalMedia` element from selection.
+ *
+ * @param {module:engine/model/selection~Selection|module:engine/model/documentselection~DocumentSelection} selection
+ *   The current selection.
+ * @returns {module:engine/model/element~Element|null}
+ *   The `drupalMedia` element which could be either the current selected an
+ *   ancestor of the selection. Returns null if the selection has no Drupal
+ *   Media element.
+ *
+ * @internal
+ */
+export function getClosestSelectedDrupalMediaElement(selection) {
+  const selectedElement = selection.getSelectedElement();
+
+  return isDrupalMedia(selectedElement)
+    ? selectedElement
+    : selection.getFirstPosition().findAncestor('drupalMedia');
+}
+
+/**
  * Gets selected Drupal Media widget if only Drupal Media is currently selected.
  *
  * @param {module:engine/model/selection~Selection} selection
@@ -41,10 +62,20 @@ export function isDrupalMediaWidget(viewElement) {
  *
  * @internal
  */
-export function getSelectedDrupalMediaWidget(selection) {
+export function getClosestSelectedDrupalMediaWidget(selection) {
   const viewElement = selection.getSelectedElement();
   if (viewElement && isDrupalMediaWidget(viewElement)) {
     return viewElement;
+  }
+
+  let parent = selection.getFirstPosition().parent;
+
+  while (parent) {
+    if (parent.is('element') && isDrupalMediaWidget(parent)) {
+      return parent;
+    }
+
+    parent = parent.parent;
   }
 
   return null;
@@ -92,4 +123,23 @@ export function getPreviewContainer(children) {
   }
 
   return null;
+}
+
+/**
+ * Gets model attribute key based on Drupal Element Style group.
+ *
+ * @example
+ *    Example: 'align' -> 'drupalElementStyleAlign'
+ *
+ * @param {string} group
+ *   The name of the group (ex. 'align', 'viewMode').
+ * @return {string}
+ *   Model attribute key.
+ *
+ * @internal
+ */
+export function groupNameToModelAttributeKey(group) {
+  // Manipulate string to have first letter capitalized to append in camel case.
+  const capitalizedFirst = group[0].toUpperCase() + group.substring(1);
+  return `drupalElementStyle${capitalizedFirst}`;
 }

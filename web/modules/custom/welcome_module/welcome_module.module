@@ -1,0 +1,13 @@
+<?php
+//unction welcome_module_entity_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+
+  // Only do the extra work if the component is configured to be displayed.
+  // This assumes a 'mymodule_addition' extra field has been defined for the
+  // entity bundle in hook_entity_extra_field_info().
+//   if ($entity->getEntityType()->id()=='node') {
+//     $build['mymodule_addition'] = [
+//       '#markup' => '<marquee>This is awesome</marquee>',
+//       '#allowed_tags' =>['marquee'],
+//     ];
+//   }
+// }

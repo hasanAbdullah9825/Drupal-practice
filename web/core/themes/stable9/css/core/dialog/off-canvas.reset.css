@@ -169,6 +169,7 @@
     perspective-origin: 50% 50%;
     position: static;
     right: auto;
+    -moz-tab-size: 8;
     tab-size: 8;
     table-layout: auto;
     text-align: left;
@@ -432,6 +433,7 @@
       perspective-origin: 50% 50%;
       position: static;
       right: auto;
+      -moz-tab-size: 8;
       tab-size: 8;
       table-layout: auto;
       text-align: left;
@@ -818,6 +820,10 @@
   width: 100%;
   min-height: 2.5rem;
   resize: vertical;
+}
+
+#drupal-off-canvas select[multiple] {
+  overflow: auto;
 }
 
 #drupal-off-canvas optgroup {

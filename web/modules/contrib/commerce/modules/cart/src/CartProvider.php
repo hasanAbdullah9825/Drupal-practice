@@ -213,7 +213,6 @@ class CartProvider implements CartProviderInterface {
         ->condition('cart', TRUE)
         ->condition('uid', $account->id())
         ->sort('order_id', 'DESC')
-        ->addTag('commerce_cart_order_ids')
         ->accessCheck(FALSE);
       $cart_ids = $query->execute();
     }

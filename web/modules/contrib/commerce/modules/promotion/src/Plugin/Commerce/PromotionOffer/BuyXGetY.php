@@ -121,7 +121,6 @@ class BuyXGetY extends OrderPromotionOfferBase {
       'offer_percentage' => '0',
       'offer_amount' => NULL,
       'offer_limit' => '0',
-      'display_inclusive' => FALSE,
     ] + parent::defaultConfiguration();
   }
 
@@ -233,16 +232,6 @@ class BuyXGetY extends OrderPromotionOfferBase {
         '#required' => TRUE,
       ];
     }
-    $form['offer']['display_inclusive'] = [
-      '#type' => 'radios',
-      '#title' => $this->t('Discount display'),
-      '#title_display' => 'invisible',
-      '#options' => [
-        TRUE => $this->t('Include the discount in the displayed unit price'),
-        FALSE => $this->t('Only show the discount on the order total summary'),
-      ],
-      '#default_value' => (int) $this->configuration['display_inclusive'],
-    ];
 
     $form['limit'] = [
       '#type' => 'fieldset',
@@ -334,7 +323,6 @@ class BuyXGetY extends OrderPromotionOfferBase {
       $this->configuration['get_conditions'] = $values['get']['conditions'];
       $this->configuration['get_auto_add'] = $values['get']['auto_add'];
       $this->configuration['offer_type'] = $values['offer']['type'];
-      $this->configuration['display_inclusive'] = !empty($values['offer']['display_inclusive']);
       if ($this->configuration['offer_type'] == 'percentage') {
         $this->configuration['offer_percentage'] = Calculator::divide((string) $values['offer']['percentage'], '100');
         $this->configuration['offer_amount'] = NULL;
@@ -448,13 +436,6 @@ class BuyXGetY extends OrderPromotionOfferBase {
 
     foreach ($final_quantities as $order_item_id => $quantity) {
       $order_item = $get_order_items[$order_item_id];
-      $adjusted_unit_price = $order_item->getAdjustedUnitPrice(['promotion']);
-
-      // The adjusted unit price is already reduced to 0, no need to continue
-      // further.
-      if ($adjusted_unit_price->isZero()) {
-        continue;
-      }
       $adjustment_amount = $this->buildAdjustmentAmount($order_item, $quantity);
 
       $order_item->addAdjustment(new Adjustment([
@@ -462,7 +443,6 @@ class BuyXGetY extends OrderPromotionOfferBase {
         'label' => $promotion->getDisplayName() ?: $this->t('Discount'),
         'amount' => $adjustment_amount->multiply('-1'),
         'source_id' => $promotion->id(),
-        'included' => !empty($this->configuration['display_inclusive']),
       ]));
     }
   }
@@ -802,52 +782,19 @@ class BuyXGetY extends OrderPromotionOfferBase {
   protected function buildAdjustmentAmount(OrderItemInterface $order_item, $quantity) {
     if ($this->configuration['offer_type'] == 'percentage') {
       $percentage = (string) $this->configuration['offer_percentage'];
-      if (!empty($this->configuration['display_inclusive'])) {
-        $adjusted_unit_price = $order_item->getAdjustedUnitPrice(['promotion']);
-        // Display-inclusive promotions must first be applied to the unit price.
-        $amount = $adjusted_unit_price->multiply($percentage);
-        $amount = $this->rounder->round($amount);
-        $new_unit_price = $order_item->getUnitPrice()->subtract($amount);
-        $order_item->setUnitPrice($new_unit_price);
-        $adjustment_amount = $amount->multiply($quantity);
+      $total_price = $order_item->getTotalPrice();
+      if ($order_item->getQuantity() != $quantity) {
+        // Calculate a new total for just the quantity that will be discounted.
+        $total_price = $order_item->getUnitPrice()->multiply($quantity);
+        $total_price = $this->rounder->round($total_price);
       }
-      else {
-        $total_price = $order_item->getTotalPrice();
-        if ($order_item->getQuantity() != $quantity) {
-          // Calculate a new total for just the quantity that will be discounted.
-          $total_price = $order_item->getUnitPrice()->multiply($quantity);
-          $total_price = $this->rounder->round($total_price);
-        }
-        $adjustment_amount = $total_price->multiply($percentage);
-      }
+      $adjustment_amount = $total_price->multiply($percentage);
     }
     else {
       $amount = Price::fromArray($this->configuration['offer_amount']);
-      if (!empty($this->configuration['display_inclusive'])) {
-        // First, get the adjusted unit price to ensure the order item is not
-        // already fully discounted.
-        $adjusted_unit_price = $order_item->getAdjustedUnitPrice(['promotion']);
-        // Display-inclusive promotions must first be applied to the unit price.
-        if ($amount->greaterThan($adjusted_unit_price)) {
-          // Don't reduce the unit price past zero.
-          $amount = $adjusted_unit_price;
-        }
-        $unit_price = $order_item->getUnitPrice();
-        $new_unit_price = $unit_price->subtract($amount);
-        $order_item->setUnitPrice($new_unit_price);
-        $adjustment_amount = $amount->multiply($quantity);
-        $adjustment_amount = $this->rounder->round($adjustment_amount);
-      }
-      else {
-        $adjusted_total_price = $order_item->getAdjustedTotalPrice(['promotion']);
-        $adjustment_amount = $amount->multiply($quantity);
-        $adjustment_amount = $this->rounder->round($adjustment_amount);
-        if ($adjustment_amount->greaterThan($adjusted_total_price)) {
-          // Don't reduce the order item total price past zero.
-          $adjustment_amount = $adjusted_total_price;
-        }
-      }
+      $adjustment_amount = $amount->multiply($quantity);
     }
+    $adjustment_amount = $this->rounder->round($adjustment_amount);
 
     return $adjustment_amount;
   }

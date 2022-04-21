@@ -354,7 +354,7 @@ class TermTest extends TaxonomyTestBase {
     // Submitting a term takes us to the add page; we need the List page.
     $this->drupalGet('admin/structure/taxonomy/manage/' . $this->vocabulary->id() . '/overview');
 
-    $this->clickLink('Edit');
+    $this->clickLink('Edit', 1);
 
     // Verify that the randomly generated term is present.
     $this->assertSession()->pageTextContains($edit['name[0][value]']);
@@ -537,7 +537,7 @@ class TermTest extends TaxonomyTestBase {
   public function testTaxonomyGetTermByName() {
     $term = $this->createTerm($this->vocabulary);
 
-    $this->expectDeprecation('taxonomy_term_load_multiple_by_name() is deprecated in drupal:9.3.0 and is removed from drupal:10.0.0. Use \Drupal::entityTypeManager()->getStorage("taxonomy_vocabulary")->loadByProperties(["name" => $name, "vid" => $vid]) instead, to get a list of taxonomy term entities having the same name and keyed by their term ID. See https://www.drupal.org/node/3039041');
+    $this->expectDeprecation('taxonomy_term_load_multiple_by_name() is deprecated in drupal:9.3.0 and is removed from drupal:10.0.0. Use \Drupal::entityTypeManager()->getStorage("taxonomy_term")->loadByProperties(["name" => $name, "vid" => $vid]) instead, to get a list of taxonomy term entities having the same name and keyed by their term ID. See https://www.drupal.org/node/3039041');
 
     // Load the term with the exact name.
     $terms = taxonomy_term_load_multiple_by_name($term->getName());

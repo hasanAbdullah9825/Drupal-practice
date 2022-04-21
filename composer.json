@@ -21,9 +21,12 @@
         "drupal/core-composer-scaffold": "^9.3",
         "drupal/core-project-message": "^9.3",
         "drupal/core-recommended": "^9.3",
+        "drupal/devel": "4.1",
+        "drupal/devel_kint_extras": "1.0",
         "drupal/slick": "2.6",
         "drupal/slick_extras": "^1.0@RC",
         "drupal/slick_views": "2.6",
+        "drupal/tara": "8.3",
         "drupal/webform": "6.1",
         "drush/drush": "^11.0"
     },
@@ -37,7 +40,8 @@
         "allow-plugins": {
             "composer/installers": true,
             "drupal/core-composer-scaffold": true,
-            "drupal/core-project-message": true
+            "drupal/core-project-message": true,
+            "drupal/console-extend-plugin": true
         }
     },
     "extra": {

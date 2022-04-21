@@ -77,8 +77,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
  *     "uid" = "uid",
  *   },
  *   links = {
- *     "add-page" = "/product/{commerce_product}/variations/add",
- *     "add-form" = "/product/{commerce_product}/variations/add/{commerce_product_variation_type}",
+ *     "add-form" = "/product/{commerce_product}/variations/add",
  *     "edit-form" = "/product/{commerce_product}/variations/{commerce_product_variation}/edit",
  *     "duplicate-form" = "/product/{commerce_product}/variations/{commerce_product_variation}/duplicate",
  *     "delete-form" = "/product/{commerce_product}/variations/{commerce_product_variation}/delete",

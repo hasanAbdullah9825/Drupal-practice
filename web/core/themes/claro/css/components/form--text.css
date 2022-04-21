@@ -22,6 +22,7 @@
   font-size: 1rem;
   line-height: 1.5rem;
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none; /* Being able to control inner box shadow on iOS. */
 }
 
@@ -39,6 +40,7 @@
 
 .form-element--type-search[type="search"] {
   -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   box-sizing: border-box;
 }
@@ -162,4 +164,8 @@ _:-ms-fullscreen,
   .form-item__label + .form-element {
     margin-top: 0;
   }
+}
+
+.form-element--type-textarea.error + .ck-editor > .ck-editor__main {
+  border: 2px solid #d72222;
 }

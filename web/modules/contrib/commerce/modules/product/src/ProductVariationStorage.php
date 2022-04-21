@@ -22,13 +22,6 @@ class ProductVariationStorage extends CommerceContentEntityStorage implements Pr
   protected $requestStack;
 
   /**
-   * Static cache of enabled variations.
-   *
-   * @var array
-   */
-  protected $enabledVariations = [];
-
-  /**
    * {@inheritdoc}
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
@@ -68,10 +61,6 @@ class ProductVariationStorage extends CommerceContentEntityStorage implements Pr
    * {@inheritdoc}
    */
   public function loadEnabled(ProductInterface $product) {
-    // Check if the enabled variations were already determined for this product.
-    if (array_key_exists($product->id(), $this->enabledVariations)) {
-      return $this->enabledVariations[$product->id()];
-    }
     $ids = [];
     foreach ($product->variations as $variation) {
       $ids[$variation->target_id] = $variation->target_id;
@@ -84,7 +73,6 @@ class ProductVariationStorage extends CommerceContentEntityStorage implements Pr
       ->condition('variation_id', $ids, 'IN');
     $result = $query->execute();
     if (empty($result)) {
-      $this->enabledVariations[$product->id()] = [];
       return [];
     }
     // Restore the original sort order.
@@ -102,9 +90,6 @@ class ProductVariationStorage extends CommerceContentEntityStorage implements Pr
         unset($enabled_variations[$variation_id]);
       }
     }
-    // Populate the static cache so that the next time this method is called
-    // we don't perform the same expansive logic during the same request.
-    $this->enabledVariations[$product->id()] = $enabled_variations;
 
     return $enabled_variations;
   }
